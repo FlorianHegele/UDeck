@@ -1,0 +1,45 @@
+name: Bug inside UDeck
+description: Create a bug report about a problem inside UDeck.
+labels: ["bug", "triage"]
+projects: ["octo-org/1", "octo-org/44"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues happening with UDeck forks should **not** be reported here.
+  - type: input
+    id: udeck-version
+    attributes:
+      label: UDeck version
+      description: The version of the UDeck application used (Client and Server must have the same version)
+      placeholder: e.g. 1.0-SNAPSHOT
+    validations:
+      required: true
+  - type: textarea
+    id: the-bug
+    attributes:
+      label: The bug
+      description: Please describe the bug. Include **details** you find neccessary.
+      placeholder: e.g. When I start the server, it suddenly crashes.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log ouput (links)
+      description: Please put your log output, or upload your log files to [gist.github.com](https://gist.github.com) and share the link here.
+      render: shell
+      placeholder: |
+        log output
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: Checking
+      options:
+        - label: I am using UDeck and **not a fork**. Issues with forks should not be reported here.
+          required: true
+        - label: I reread everything carefully to avoid any mistakes and didn't tick the next box.
+          required: true
+        - label: I didn't read the checkboxes and ticked them all.
+        
+        
