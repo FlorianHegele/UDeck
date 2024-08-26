@@ -21,7 +21,9 @@
     <dependencies>
         <dependency>
             <groupId>net.fhegele</groupId>
-            <artifactId>udeck-core</artifactId>
+            <artifactId>udeck-protocol</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

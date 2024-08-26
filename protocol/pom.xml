@@ -11,11 +11,18 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>udeck-core</artifactId>
+    <artifactId>udeck-protocol</artifactId>
     <version>${parent.version}</version>
     <packaging>jar</packaging>
 
-    <name>UDeck-Core</name>
-    <description>Main content shared between server and client.</description>
+    <name>UDeck-Protocol</name>
+    <description>Implementation of UDeck protocol for use in UDeck Client/Server</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
