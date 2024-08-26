@@ -22,7 +22,6 @@
         <dependency>
             <groupId>net.fhegele</groupId>
             <artifactId>udeck-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
