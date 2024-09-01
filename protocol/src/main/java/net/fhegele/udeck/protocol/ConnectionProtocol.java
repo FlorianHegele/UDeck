@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public enum ConnectionProtocol {
 
-    INIT_CONNECTION(initProtocol()),
+    INIT(initProtocol()),
     LINKED(initProtocol());
 
     private final Map<PacketFlow, CodecData<?>> packetsFlow;

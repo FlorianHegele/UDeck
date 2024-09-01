@@ -5,7 +5,8 @@ import net.fhegele.udeck.protocol.ConnectionProtocol;
 
 public enum PacketFlow {
 
-    CLIENT_RECEIVE, SERVER_RECEIVE;
+    CLIENT_BOUND, // Client receives this packet type
+    SERVER_BOUND; // Server receives this packet type
 
     private final AttributeKey<ConnectionProtocol.CodecData<?>> attributeKey;
 
@@ -14,7 +15,7 @@ public enum PacketFlow {
     }
 
     public PacketFlow getOpposite() {
-        return this == CLIENT_RECEIVE ? SERVER_RECEIVE : CLIENT_RECEIVE;
+        return this == CLIENT_BOUND ? SERVER_BOUND : CLIENT_BOUND;
     }
 
     public AttributeKey<ConnectionProtocol.CodecData<?>> getProtocolKey() {

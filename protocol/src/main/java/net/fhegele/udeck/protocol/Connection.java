@@ -72,8 +72,8 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
     }
 
     public static void setProtocolAttributes(Channel channel, ConnectionProtocol protocol) {
-        channel.attr(PacketFlow.SERVER_RECEIVE.getProtocolKey()).set(protocol.getCodecData(PacketFlow.SERVER_RECEIVE));
-        channel.attr(PacketFlow.CLIENT_RECEIVE.getProtocolKey()).set(protocol.getCodecData(PacketFlow.CLIENT_RECEIVE));
+        channel.attr(PacketFlow.SERVER_BOUND.getProtocolKey()).set(protocol.getCodecData(PacketFlow.SERVER_BOUND));
+        channel.attr(PacketFlow.CLIENT_BOUND.getProtocolKey()).set(protocol.getCodecData(PacketFlow.CLIENT_BOUND));
     }
 
     public static void configureCodec(ChannelPipeline pipeline, PacketFlow packetFlow) {
