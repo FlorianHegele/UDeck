@@ -54,7 +54,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends PacketListener> void handlePacket(Packet<T> packet, @NotNull PacketListener packetListener) {
+    private static <T extends PacketListener> void handlePacket(@NotNull Packet<T> packet, @NotNull PacketListener packetListener) {
         packet.handle((T) packetListener);
     }
 
