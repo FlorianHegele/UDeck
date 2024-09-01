@@ -30,6 +30,7 @@
         <module>protocol</module>
         <module>client</module>
         <module>server</module>
+        <module>log</module>
     </modules>
 
     <issueManagement>
