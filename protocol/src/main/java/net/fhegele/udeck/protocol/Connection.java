@@ -4,6 +4,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.flow.FlowControlHandler;
+import net.fhegele.udeck.logging.LogUtils;
 import net.fhegele.udeck.protocol.codec.FramedPacketDecoder;
 import net.fhegele.udeck.protocol.codec.FramedPacketEncoder;
 import net.fhegele.udeck.protocol.codec.PacketDecoder;
@@ -12,10 +14,13 @@ import net.fhegele.udeck.protocol.packet.Packet;
 import net.fhegele.udeck.protocol.packet.PacketFlow;
 import net.fhegele.udeck.protocol.packet.PacketListener;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.net.SocketAddress;
 
 public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private final PacketFlow receiveFlow;
     private PacketListener packetListener;
@@ -34,7 +39,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
         channel = ctx.channel();
         address = channel.remoteAddress();
 
-        System.out.println("New connection from " + address);
+        LOGGER.info("New connection from {}", address);
     }
 
     @Override
@@ -71,9 +76,13 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
         channel.attr(PacketFlow.CLIENT_RECEIVE.getProtocolKey()).set(protocol.getCodecData(PacketFlow.CLIENT_RECEIVE));
     }
 
-    public static void initConnection(ChannelPipeline pipeline, PacketFlow packetFlow) {
+    public static void configureCodec(ChannelPipeline pipeline, PacketFlow packetFlow) {
         pipeline.addLast("framer", new FramedPacketDecoder()).addLast("decoder", new PacketDecoder(packetFlow))
                 .addLast("lengthPrepender", new FramedPacketEncoder()).addLast("encoder", new PacketEncoder(packetFlow.getOpposite()));
+    }
+
+    public void configurePacketHandler(ChannelPipeline pipeline) {
+        pipeline.addLast(new FlowControlHandler()).addLast("packetHandler", this);
     }
 
     public boolean isConnected() {
