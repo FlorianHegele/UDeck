@@ -2,7 +2,12 @@ package net.fhegele.udeck.protocol;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
+import net.fhegele.udeck.protocol.codec.FramedPacketDecoder;
+import net.fhegele.udeck.protocol.codec.FramedPacketEncoder;
+import net.fhegele.udeck.protocol.codec.PacketDecoder;
+import net.fhegele.udeck.protocol.codec.PacketEncoder;
 import net.fhegele.udeck.protocol.packet.Packet;
 import net.fhegele.udeck.protocol.packet.PacketFlow;
 import net.fhegele.udeck.protocol.packet.PacketListener;
@@ -64,6 +69,11 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
     public static void setProtocolAttributes(Channel channel, ConnectionProtocol protocol) {
         channel.attr(PacketFlow.SERVER_RECEIVE.getProtocolKey()).set(protocol.getCodecData(PacketFlow.SERVER_RECEIVE));
         channel.attr(PacketFlow.CLIENT_RECEIVE.getProtocolKey()).set(protocol.getCodecData(PacketFlow.CLIENT_RECEIVE));
+    }
+
+    public static void initConnection(ChannelPipeline pipeline, PacketFlow packetFlow) {
+        pipeline.addLast("framer", new FramedPacketDecoder()).addLast("decoder", new PacketDecoder(packetFlow))
+                .addLast("lengthPrepender", new FramedPacketEncoder()).addLast("encoder", new PacketEncoder(packetFlow.getOpposite()));
     }
 
     public boolean isConnected() {
