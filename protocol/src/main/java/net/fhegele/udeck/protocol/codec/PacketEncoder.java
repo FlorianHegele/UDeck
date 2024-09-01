@@ -12,13 +12,13 @@ public class PacketEncoder extends MessageToByteEncoder<Packet<?>> {
 
     private final AttributeKey<ConnectionProtocol.CodecData<?>> protocolKey;
 
-    public PacketEncoder(PacketFlow receivedFlow) {
-        this.protocolKey = receivedFlow.getProtocolKey();
+    public PacketEncoder(PacketFlow sendFlow) {
+        this.protocolKey = sendFlow.getProtocolKey();
     }
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet<?> packet, ByteBuf out) {
-        final int packetId = ctx.channel().attr(protocolKey).get().packetId(packet);;
+        final int packetId = ctx.channel().attr(protocolKey).get().packetId(packet);
         out.writeShort(packetId); // 2 bytes
         packet.write(out);
     }
