@@ -3,6 +3,7 @@ package net.fhegele.udeck.protocol.codec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
 import net.fhegele.udeck.protocol.packet.BadPacketException;
@@ -21,11 +22,18 @@ public class PacketDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+        final Attribute<ConnectionProtocol.CodecData<?>> attribute = ctx.channel().attr(protocolKey);
+        final ConnectionProtocol.CodecData<?> codecData = attribute.get();
+
+        if(codecData == null) throw new IllegalCallerException("No packet should be received unless there is codecdata");
+
         final int packetId = in.readUnsignedShort();
-        final Packet<?> packet = ctx.channel().attr(protocolKey).get().createPacket(packetId, in);
+        final Packet<?> packet = codecData.createPacket(packetId, in);
 
         if(packet == null) throw new BadPacketException("Packet with ID" + packetId + " doesn't exist");
 
         out.add(packet);
+
+        ConnectionProtocol.CodecData.updateProtocolIfNeeded(attribute, packet);
     }
 }
