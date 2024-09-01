@@ -1,6 +1,7 @@
 package net.fhegele.udeck.protocol;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.Attribute;
 import net.fhegele.udeck.protocol.packet.Packet;
 import net.fhegele.udeck.protocol.packet.PacketFlow;
 import net.fhegele.udeck.protocol.packet.PacketListener;
@@ -32,7 +33,7 @@ public enum ConnectionProtocol {
 
         private final Map<PacketFlow, PacketSet<?>> packetsFlow = new EnumMap<>(PacketFlow.class);
 
-        public <T extends PacketListener> ProtocolBuilder addFlow(PacketFlow packetFlow, PacketSet<T> packets) {
+        private  <T extends PacketListener> ProtocolBuilder addFlow(PacketFlow packetFlow, PacketSet<T> packets) {
             packetsFlow.put(packetFlow, packets);
             return this;
         }
@@ -59,7 +60,7 @@ public enum ConnectionProtocol {
         private final PacketFlow flow;
         private final PacketSet<T> packetSet;
 
-        public CodecData(ConnectionProtocol connectionProtocol, PacketFlow flow, PacketSet<T> packetSet) {
+        private CodecData(ConnectionProtocol connectionProtocol, PacketFlow flow, PacketSet<T> packetSet) {
             this.connectionProtocol = connectionProtocol;
             this.flow = flow;
             this.packetSet = packetSet;
@@ -86,9 +87,18 @@ public enum ConnectionProtocol {
             return packetSet.createPacket(packetId, packetData);
         }
 
+        public static void updateProtocolIfNeeded(Attribute<CodecData<?>> attribute, Packet<?> packet) {
+            final ConnectionProtocol newProtocol = packet.nextProtocol();
+            if(newProtocol == null) return;
+
+            final CodecData<?> actualCodecData = attribute.get();
+            if(actualCodecData.connectionProtocol == newProtocol) return;
+
+            attribute.set(newProtocol.getCodecData(actualCodecData.flow));
+        }
     }
 
-    public static class PacketSet<T extends PacketListener> {
+    private static class PacketSet<T extends PacketListener> {
 
         private final Map<Class<? extends Packet<? super T>>, Integer> packetClassToId = new HashMap<>();
         private final List<Function<ByteBuf, ? extends Packet<? super T>>> idToPacket = new ArrayList<>();
@@ -105,7 +115,7 @@ public enum ConnectionProtocol {
         }
 
         public int getId(Class<?> clazz) {
-            return packetClassToId.get(clazz);
+            return packetClassToId.getOrDefault(clazz, -1);
         }
 
         public boolean contains(Class<?> clazz) {
