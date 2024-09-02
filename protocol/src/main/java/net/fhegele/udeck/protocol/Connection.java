@@ -59,16 +59,24 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
     }
 
     public void setPacketListener(PacketListener packetListener) {
+        setPacketListener(this, packetListener, channel);
+    }
+
+    public static void setPacketListener(Connection connection, PacketListener packetListener, Channel channel) {
         if(packetListener == null) throw new IllegalArgumentException("packetListener must not be null");
 
         final PacketFlow flow = packetListener.getFlow();
-        if(flow != receiveFlow) throw new IllegalArgumentException("Trying to set a packet listener with opposite flow, the current flow is " + receiveFlow + " but you are trying to set the flow " + flow);
+        if(flow != connection.receiveFlow) throw new IllegalArgumentException("Trying to set a packet listener with opposite flow, the current flow is " + connection.receiveFlow + " but you are trying to set the flow " + flow);
 
         final ConnectionProtocol protocol = packetListener.getProtocol();
         final ConnectionProtocol usedProtocol = channel.attr(flow.getProtocolKey()).get().getProtocol();
         if(usedProtocol != protocol) throw new IllegalArgumentException("Trying to set a packet listener with other protocol, the current protocol is " + usedProtocol.name() + " but you are trying to set the protocol " + protocol.name());
 
-        this.packetListener = packetListener;
+        connection.packetListener = packetListener;
+    }
+
+    public void sendPacket(Packet<?> packet) {
+        channel.writeAndFlush(packet);
     }
 
     public static void setProtocolAttributes(Channel channel, ConnectionProtocol protocol) {
@@ -93,4 +101,5 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
         if(isConnected())
             channel.close().awaitUninterruptibly();
     }
+
 }
