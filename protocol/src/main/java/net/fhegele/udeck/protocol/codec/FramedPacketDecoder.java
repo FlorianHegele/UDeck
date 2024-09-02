@@ -21,7 +21,7 @@ public class FramedPacketDecoder extends ByteToMessageDecoder {
             return;
         }
 
-        final ByteBuf packet = in.readSlice(packetLength);
+        final ByteBuf packet = in.readRetainedSlice(packetLength);
         out.add(packet);
     }
 
