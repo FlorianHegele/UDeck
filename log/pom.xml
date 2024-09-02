@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>udeck-log</artifactId>
-    <version>${parent.version}</version>
+    <version>0.1-BETA</version>
     <packaging>jar</packaging>
 
     <name>UDeck-Log</name>
@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <artifactId>slf4j-simple</artifactId>
             <version>2.0.16</version>
         </dependency>
     </dependencies>

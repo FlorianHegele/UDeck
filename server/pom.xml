@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>udeck-server</artifactId>
-    <version>${parent.version}</version>
+    <version>0.1-BETA</version>
     <packaging>jar</packaging>
 
     <name>UDeck-Server</name>
