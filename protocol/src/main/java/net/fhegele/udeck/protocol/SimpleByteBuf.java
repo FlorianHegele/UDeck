@@ -770,6 +770,15 @@ public class SimpleByteBuf extends ByteBuf {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
+    public SimpleByteBuf writeEnum(Enum<?> e) {
+        source.writeInt(e.ordinal());
+        return this;
+    }
+
+    public <T extends Enum<T>> T readEnum(Class<T> clazz) {
+        return clazz.getEnumConstants()[source.readInt()];
+    }
+
     public SimpleByteBuf writeJsonObject(Object obj) {
         writeUTF8(GSON.toJson(obj));
         return this;
