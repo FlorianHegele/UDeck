@@ -2,8 +2,6 @@ package net.fhegele.udeck.protocol;
 
 import io.netty.util.Attribute;
 import net.fhegele.udeck.protocol.packet.*;
-import net.fhegele.udeck.protocol.packet.handshake.ServerBoundPingPacket;
-import net.fhegele.udeck.protocol.packet.handshake.ClientBoundPongPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -12,10 +10,14 @@ import java.util.function.Function;
 public enum ConnectionProtocol {
 
     HANDSHAKE(initProtocol()
-            .addFlow(PacketFlow.CLIENT_BOUND, new PacketSet<ClientboundPacketListener>().add(ClientBoundPongPacket.class, ClientBoundPongPacket::new))
-            .addFlow(PacketFlow.SERVER_BOUND, new PacketSet<ServerboundPacketListener>().add(ServerBoundPingPacket.class, ServerBoundPingPacket::new))
+            //.addFlow(PacketFlow.SERVER_BOUND, new PacketSet<>())
     ),
-    LINKED(initProtocol());
+    STATUS(initProtocol()),
+    LOGIN(initProtocol()),
+    LINKED(initProtocol()
+            //.addFlow(PacketFlow.CLIENT_BOUND, new PacketSet<ClientBoundPacketListener>().add(ClientBoundPongPacket.class, ClientBoundPongPacket::new))
+            //.addFlow(PacketFlow.SERVER_BOUND, new PacketSet<ServerBoundPacketListener>().add(ServerBoundPingPacket.class, ServerBoundPingPacket::new))
+    );
 
     private final Map<PacketFlow, CodecData<?>> packetsFlow;
 

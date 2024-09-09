@@ -1,10 +1,9 @@
-package net.fhegele.udeck.protocol.packet.handshake;
+package net.fhegele.udeck.protocol.packet.common;
 
 import net.fhegele.udeck.protocol.SimpleByteBuf;
-import net.fhegele.udeck.protocol.packet.ClientboundPacketListener;
 import net.fhegele.udeck.protocol.packet.Packet;
 
-public class ClientBoundPongPacket implements Packet<ClientboundPacketListener> {
+public class ClientBoundPongPacket implements Packet<ClientPongPacketListener> {
 
     private final long timestamp;
 
@@ -22,7 +21,7 @@ public class ClientBoundPongPacket implements Packet<ClientboundPacketListener> 
     }
 
     @Override
-    public void handle(ClientboundPacketListener listener) {
+    public void handle(ClientPongPacketListener listener) {
         listener.handlePong(this);
     }
 

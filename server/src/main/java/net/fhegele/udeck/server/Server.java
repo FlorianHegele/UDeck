@@ -11,7 +11,6 @@ import io.netty.handler.logging.LoggingHandler;
 import net.fhegele.udeck.protocol.Connection;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
 import net.fhegele.udeck.protocol.packet.PacketFlow;
-import net.fhegele.udeck.server.protocol.ServerboundPacketListenerImpl;
 
 public class Server {
 
@@ -46,7 +45,7 @@ public class Server {
                             Connection.setProtocolAttributes(pipeline.channel(), ConnectionProtocol.HANDSHAKE);
                             pipeline.addLast(connection);
 
-                            Connection.setPacketListener(connection, new ServerboundPacketListenerImpl(connection), pipeline.channel());
+                            // Connection.setPacketListener(connection, new ServerBoundPacketListenerImpl(connection), pipeline.channel());
                         }
                     })
                     .bind(port)

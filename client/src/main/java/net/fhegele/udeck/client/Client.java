@@ -6,7 +6,6 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import net.fhegele.udeck.client.protocol.ClientPacketListenerImpl;
 import net.fhegele.udeck.protocol.Connection;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
 import net.fhegele.udeck.protocol.packet.PacketFlow;
@@ -54,7 +53,7 @@ public class Client {
                     .connect(host, port).sync();
 
             final Keyboard keyboard = new Keyboard(connection);
-            connection.setPacketListener(new ClientPacketListenerImpl());
+            // connection.setPacketListener(new ClientPacketListenerImpl());
 
             try {
                 keyboard.handle();

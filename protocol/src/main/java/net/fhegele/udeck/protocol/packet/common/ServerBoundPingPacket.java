@@ -1,10 +1,9 @@
-package net.fhegele.udeck.protocol.packet.handshake;
+package net.fhegele.udeck.protocol.packet.common;
 
 import net.fhegele.udeck.protocol.SimpleByteBuf;
 import net.fhegele.udeck.protocol.packet.Packet;
-import net.fhegele.udeck.protocol.packet.ServerboundPacketListener;
 
-public class ServerBoundPingPacket implements Packet<ServerboundPacketListener> {
+public class ServerBoundPingPacket implements Packet<ServerPingPacketListener> {
 
     private final long timestamp;
 
@@ -22,7 +21,7 @@ public class ServerBoundPingPacket implements Packet<ServerboundPacketListener> 
     }
 
     @Override
-    public void handle(ServerboundPacketListener listener) {
+    public void handle(ServerPingPacketListener listener) {
         listener.handlePing(this);
     }
 
