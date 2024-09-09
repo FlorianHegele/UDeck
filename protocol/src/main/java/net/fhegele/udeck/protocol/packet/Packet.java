@@ -1,12 +1,12 @@
 package net.fhegele.udeck.protocol.packet;
 
-import io.netty.buffer.ByteBuf;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
+import net.fhegele.udeck.protocol.SimpleByteBuf;
 import org.jetbrains.annotations.Nullable;
 
 public interface Packet<T extends PacketListener> {
 
-    void write(ByteBuf buf);
+    void write(SimpleByteBuf buf);
 
     void handle(T listener);
 

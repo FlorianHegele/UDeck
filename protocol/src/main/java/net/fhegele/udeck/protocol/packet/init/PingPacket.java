@@ -1,6 +1,6 @@
 package net.fhegele.udeck.protocol.packet.init;
 
-import io.netty.buffer.ByteBuf;
+import net.fhegele.udeck.protocol.SimpleByteBuf;
 import net.fhegele.udeck.protocol.packet.Packet;
 import net.fhegele.udeck.protocol.packet.ServerboundPacketListener;
 
@@ -12,12 +12,12 @@ public class PingPacket implements Packet<ServerboundPacketListener> {
         timestamp = System.currentTimeMillis();
     }
 
-    public PingPacket(ByteBuf buf) {
+    public PingPacket(SimpleByteBuf buf) {
         timestamp = buf.readLong();
     }
 
     @Override
-    public void write(ByteBuf buf) {
+    public void write(SimpleByteBuf buf) {
         buf.writeLong(timestamp);
     }
 

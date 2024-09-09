@@ -86,7 +86,7 @@ public enum ConnectionProtocol {
         }
 
         @Nullable
-        public Packet<?> createPacket(int packetId, ByteBuf packetData) {
+        public Packet<?> createPacket(int packetId, SimpleByteBuf packetData) {
             return packetSet.createPacket(packetId, packetData);
         }
 
@@ -104,9 +104,9 @@ public enum ConnectionProtocol {
     private static class PacketSet<T extends PacketListener> {
 
         private final Map<Class<? extends Packet<? super T>>, Integer> packetClassToId = new HashMap<>();
-        private final List<Function<ByteBuf, ? extends Packet<? super T>>> idToPacket = new ArrayList<>();
+        private final List<Function<SimpleByteBuf, ? extends Packet<? super T>>> idToPacket = new ArrayList<>();
 
-        public <P extends Packet<? super T>> PacketSet<T> add(Class<P> clazz, Function<ByteBuf, P> instanceFunction) {
+        public <P extends Packet<? super T>> PacketSet<T> add(Class<P> clazz, Function<SimpleByteBuf, P> instanceFunction) {
             if(packetClassToId.containsKey(clazz))
                 throw new IllegalArgumentException("Packet class " + clazz.getName() + " is already registered with id " + packetClassToId.get(clazz));
 
@@ -126,8 +126,8 @@ public enum ConnectionProtocol {
         }
 
         @Nullable
-        public Packet<?> createPacket(int packetId, ByteBuf packetData) {
-            final Function<ByteBuf, ? extends Packet<? super T>> instanceFunction = idToPacket.get(packetId);
+        public Packet<?> createPacket(int packetId, SimpleByteBuf packetData) {
+            final Function<SimpleByteBuf, ? extends Packet<? super T>> instanceFunction = idToPacket.get(packetId);
 
             return (instanceFunction == null) ? null : instanceFunction.apply(packetData);
         }
