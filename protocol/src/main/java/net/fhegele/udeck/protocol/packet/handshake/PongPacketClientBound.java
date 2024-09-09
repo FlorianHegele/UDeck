@@ -4,15 +4,15 @@ import net.fhegele.udeck.protocol.SimpleByteBuf;
 import net.fhegele.udeck.protocol.packet.ClientboundPacketListener;
 import net.fhegele.udeck.protocol.packet.Packet;
 
-public class PongPacket implements Packet<ClientboundPacketListener> {
+public class PongPacketClientBound implements Packet<ClientboundPacketListener> {
 
     private final long timestamp;
 
-    public PongPacket(long timestamp) {
+    public PongPacketClientBound(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public PongPacket(SimpleByteBuf buf) {
+    public PongPacketClientBound(SimpleByteBuf buf) {
         timestamp = buf.readLong();
     }
 
