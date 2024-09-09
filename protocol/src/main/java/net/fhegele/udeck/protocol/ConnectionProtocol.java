@@ -2,8 +2,8 @@ package net.fhegele.udeck.protocol;
 
 import io.netty.util.Attribute;
 import net.fhegele.udeck.protocol.packet.*;
-import net.fhegele.udeck.protocol.packet.handshake.PingPacketServerBound;
-import net.fhegele.udeck.protocol.packet.handshake.PongPacketClientBound;
+import net.fhegele.udeck.protocol.packet.handshake.ServerBoundPingPacket;
+import net.fhegele.udeck.protocol.packet.handshake.ClientBoundPongPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -12,8 +12,8 @@ import java.util.function.Function;
 public enum ConnectionProtocol {
 
     HANDSHAKE(initProtocol()
-            .addFlow(PacketFlow.CLIENT_BOUND, new PacketSet<ClientboundPacketListener>().add(PongPacketClientBound.class, PongPacketClientBound::new))
-            .addFlow(PacketFlow.SERVER_BOUND, new PacketSet<ServerboundPacketListener>().add(PingPacketServerBound.class, PingPacketServerBound::new))
+            .addFlow(PacketFlow.CLIENT_BOUND, new PacketSet<ClientboundPacketListener>().add(ClientBoundPongPacket.class, ClientBoundPongPacket::new))
+            .addFlow(PacketFlow.SERVER_BOUND, new PacketSet<ServerboundPacketListener>().add(ServerBoundPingPacket.class, ServerBoundPingPacket::new))
     ),
     LINKED(initProtocol());
 

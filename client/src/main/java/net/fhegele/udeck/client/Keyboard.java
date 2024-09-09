@@ -2,7 +2,7 @@ package net.fhegele.udeck.client;
 
 import net.fhegele.udeck.protocol.Connection;
 import net.fhegele.udeck.protocol.packet.Packet;
-import net.fhegele.udeck.protocol.packet.handshake.PingPacketServerBound;
+import net.fhegele.udeck.protocol.packet.handshake.ServerBoundPingPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class Keyboard {
 
             final Packet<?> packet;
             switch (message) {
-                case "1" -> packet = new PingPacketServerBound();
+                case "1" -> packet = new ServerBoundPingPacket();
                 default -> packet = null;
             }
 

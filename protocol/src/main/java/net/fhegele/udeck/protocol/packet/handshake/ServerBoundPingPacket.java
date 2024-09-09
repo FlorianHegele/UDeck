@@ -4,15 +4,15 @@ import net.fhegele.udeck.protocol.SimpleByteBuf;
 import net.fhegele.udeck.protocol.packet.Packet;
 import net.fhegele.udeck.protocol.packet.ServerboundPacketListener;
 
-public class PingPacketServerBound implements Packet<ServerboundPacketListener> {
+public class ServerBoundPingPacket implements Packet<ServerboundPacketListener> {
 
     private final long timestamp;
 
-    public PingPacketServerBound() {
+    public ServerBoundPingPacket() {
         timestamp = System.currentTimeMillis();
     }
 
-    public PingPacketServerBound(SimpleByteBuf buf) {
+    public ServerBoundPingPacket(SimpleByteBuf buf) {
         timestamp = buf.readLong();
     }
 
