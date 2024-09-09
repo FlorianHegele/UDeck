@@ -2,7 +2,7 @@ package net.fhegele.udeck.client;
 
 import net.fhegele.udeck.protocol.Connection;
 import net.fhegele.udeck.protocol.packet.Packet;
-import net.fhegele.udeck.protocol.packet.init.PingPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PingPacket;
 
 import java.io.BufferedReader;
 import java.io.IOException;

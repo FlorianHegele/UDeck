@@ -3,7 +3,7 @@ package net.fhegele.udeck.client.protocol;
 import net.fhegele.udeck.logging.LogUtils;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
 import net.fhegele.udeck.protocol.packet.ClientboundPacketListener;
-import net.fhegele.udeck.protocol.packet.init.PongPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PongPacket;
 import org.slf4j.Logger;
 
 public class ClientPacketListenerImpl implements ClientboundPacketListener {
@@ -18,7 +18,7 @@ public class ClientPacketListenerImpl implements ClientboundPacketListener {
     
     @Override
     public ConnectionProtocol getProtocol() {
-        return ConnectionProtocol.INIT;
+        return ConnectionProtocol.HANDSHAKE;
     }
 
 }

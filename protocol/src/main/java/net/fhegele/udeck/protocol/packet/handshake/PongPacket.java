@@ -1,4 +1,4 @@
-package net.fhegele.udeck.protocol.packet.init;
+package net.fhegele.udeck.protocol.packet.handshake;
 
 import net.fhegele.udeck.protocol.SimpleByteBuf;
 import net.fhegele.udeck.protocol.packet.ClientboundPacketListener;

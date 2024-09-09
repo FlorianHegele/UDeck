@@ -43,7 +43,7 @@ public class Server {
 
                             Connection.configureCodec(pipeline, flow);
 
-                            Connection.setProtocolAttributes(pipeline.channel(), ConnectionProtocol.INIT);
+                            Connection.setProtocolAttributes(pipeline.channel(), ConnectionProtocol.HANDSHAKE);
                             pipeline.addLast(connection);
 
                             Connection.setPacketListener(connection, new ServerboundPacketListenerImpl(connection), pipeline.channel());

@@ -45,7 +45,7 @@ public class Client {
 
                             final PacketFlow flow = PacketFlow.CLIENT_BOUND;
                             Connection.configureCodec(pipeline, flow);
-                            Connection.setProtocolAttributes(pipeline.channel(), ConnectionProtocol.INIT);
+                            Connection.setProtocolAttributes(pipeline.channel(), ConnectionProtocol.HANDSHAKE);
 
                             connection = new Connection(flow);
                             pipeline.addLast(connection);

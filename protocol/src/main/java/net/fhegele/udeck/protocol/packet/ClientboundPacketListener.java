@@ -1,6 +1,6 @@
 package net.fhegele.udeck.protocol.packet;
 
-import net.fhegele.udeck.protocol.packet.init.PongPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PongPacket;
 
 public interface ClientboundPacketListener extends PacketListener {
 

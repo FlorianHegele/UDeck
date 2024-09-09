@@ -1,6 +1,6 @@
 package net.fhegele.udeck.protocol.packet;
 
-import net.fhegele.udeck.protocol.packet.init.PingPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PingPacket;
 
 public interface ServerboundPacketListener extends PacketListener {
 

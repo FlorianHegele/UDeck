@@ -3,8 +3,8 @@ package net.fhegele.udeck.server.protocol;
 import net.fhegele.udeck.protocol.Connection;
 import net.fhegele.udeck.protocol.ConnectionProtocol;
 import net.fhegele.udeck.protocol.packet.ServerboundPacketListener;
-import net.fhegele.udeck.protocol.packet.init.PingPacket;
-import net.fhegele.udeck.protocol.packet.init.PongPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PingPacket;
+import net.fhegele.udeck.protocol.packet.handshake.PongPacket;
 
 public class ServerboundPacketListenerImpl implements ServerboundPacketListener {
 
@@ -22,6 +22,6 @@ public class ServerboundPacketListenerImpl implements ServerboundPacketListener 
 
     @Override
     public ConnectionProtocol getProtocol() {
-        return ConnectionProtocol.INIT;
+        return ConnectionProtocol.HANDSHAKE;
     }
 }
